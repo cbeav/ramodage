@@ -75,6 +75,14 @@ abstract class AbstractValueProvider<TYPE> implements ValueProvider<TYPE> {
         long minLength=field.getMinLength()!=0?field.getMinLength():field.getFixedLength();
         long maxLength=field.getMaxLength()!=0?field.getMaxLength():field.getFixedLength();
 
+        if (field.getPrefix() != null && field.getSuffix() != null) {
+            value = randomValueWithPrefixAndSuffix(minLength,
+                                                   maxLength,
+                                                   field.getPrefix(),
+                                                   field.getSuffix());
+            return value;
+        }
+
         if (field.getPrefix() != null) {
             value = randomValueWithPrefix(minLength, maxLength, field.getPrefix());
             return value;
@@ -174,6 +182,18 @@ abstract class AbstractValueProvider<TYPE> implements ValueProvider<TYPE> {
      * @return the random value
      */
     TYPE randomValueWithSuffix(long minLength, long maxLength, TYPE suffix) {
+        return randomValue(minLength,maxLength);
+    }
+
+    /**
+     * This method will generate a random value which ends with a given prefix and suffix.The default
+     * implementation ignores both. Specific value providers can override if required
+     * @param minLength the min length of the random value. a value of -1 means that length is ignored
+     * @param maxLength the max length of the random value. a value of -1 means that length is ignored
+     * @param suffix value to be suffixed
+     * @return the random value
+     */
+    TYPE randomValueWithPrefixAndSuffix(long minLength, long maxLength, TYPE prefix, TYPE suffix) {
         return randomValue(minLength,maxLength);
     }
 }

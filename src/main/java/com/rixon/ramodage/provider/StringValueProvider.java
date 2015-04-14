@@ -40,6 +40,15 @@ public class StringValueProvider extends AbstractValueProvider<String> {
         return StringUtil.replaceSuffix(value,suffix);
     }
 
+    @Override
+    public String randomValueWithPrefixAndSuffix(long minLength,
+                                                 long maxLength,
+                                                 String prefix,
+                                                 String suffix) {
+        String value = randomValue(minLength,maxLength);
+        return StringUtil.replaceSuffix(StringUtil.replacePrefix(value,prefix),suffix);
+    }
+
     private String randomStringValue(int length) {
         char[] chars = new char[length];
         for  (int i=0;i<length;i++){

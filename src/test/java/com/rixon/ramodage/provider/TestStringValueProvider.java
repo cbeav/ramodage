@@ -81,6 +81,19 @@ public class TestStringValueProvider {
     }
 
     @Test
+    public void testRandomValueWithPrefixAndSuffix() {
+        String prefix="CUSIP";
+        String suffix = "PPTY";
+        final int expectedLength = 15;
+        for(int i=0;i<100;i++){
+            String value = stringValueProvider.randomValueWithPrefixAndSuffix(expectedLength,expectedLength,prefix,suffix);
+            assertThat(value.length(),is(expectedLength));
+            assertTrue(value.startsWith(prefix));
+            assertTrue(value.endsWith(suffix));
+        }
+    }
+
+    @Test
     public void testRandomValueWithSuffixLongerThanValue() {
         String suffix="ACTMETERPOTER";
         final int expectedLength = 10;
